@@ -1,0 +1,8 @@
+<h2> Show order </h2>
+Count: <%= @order.count %></br>
+Currency: <%= @order.currency.label%></br>
+Process: <%= @order.process %> </br>
+Status: <%= @order.status %> </br>
+<%= button_to "Change", edit_order_path(@order), method: :get %>
+<%= button_to "Delete", @order, method: :delete, form: {data: {turbo_confirm: "Уверены?"}} %>
+<%= button_to "Orders", orders_path, method: :get %>

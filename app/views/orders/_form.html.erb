@@ -1,0 +1,23 @@
+<%= form_with model: order do |f| %>
+   <% if params[:action] == "new" %>
+   <%= f.label :process %>
+   <%= f.select :process, Order.processes.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
+
+   <%= f.label :currency_id %>
+   <%= f.select :currency_id, Currency.all.collect{|c| [c.label, c.id] } %> </br>
+
+   <%= f.label :count %>
+   <%= f.number_field :count %> </br>
+
+   <%= f.label :status %>
+   <%= f.select :status,  Order.statuses.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
+
+   <% else %>
+
+   <%= f.label :status %>
+   <%= f.select :status,  Order.statuses.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
+
+   <% end %>
+   
+   <%= f.submit "Save" %>
+<% end %>
