@@ -1,4 +1,4 @@
-<%= form_with model: order do |f| %>
+<%= form_with model: order,class: "form-group" do |f| %>
    <% if params[:action] == "new" %>
    <%= f.label :process %>
    <%= f.select :process, Order.processes.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
