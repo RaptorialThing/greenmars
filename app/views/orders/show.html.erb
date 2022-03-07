@@ -1,8 +1,82 @@
+
+<div class="row m-1">
+<div class="col-2">
 <h2> Show order </h2>
-Count: <%= @order.count %></br>
-Currency: <%= @order.currency.label%></br>
-Process: <%= @order.process %> </br>
-Status: <%= @order.status %> </br>
-<%= button_to "Change", edit_order_path(@order), method: :get %>
-<%= button_to "Delete", @order, method: :delete, form: {data: {turbo_confirm: "Уверены?"}} %>
-<%= button_to "Orders", orders_path, method: :get %>
+</div>
+</div>
+
+<div class="dataTable-container"><table class="table table-borderless datatable dataTable-table">
+<thead>
+<tr>
+<th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">#</a></th>
+<th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Action</a></th>
+<th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Count</a></th>
+<th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Currency</a></th>
+<th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Status</a></th>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="#">#<%=@order.id%></a></th>
+<td><%= @order.process%></td>
+<td><a href="#" class="text-primary"><%= @order.count%></a></td>
+<td><%= @order.currency.label %></td>
+<% if @order.status.to_s == "enabled"%>
+<td><span class="badge bg-success"><%= @order.status %></span></td>
+<% else %>
+<td><span class="badge bg-secondary"><%= @order.status %></span></td>
+<% end %>
+</tr>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="row">
+<div class="col-6">
+<div class="dataTable-container"><table class="table table-borderless datatable dataTable-table">
+<tr>
+<td class="col-4"><%= button_to "Change", edit_order_path(@order), method: :get,class: "btn btn-success" %></td>
+<td class="col-4"><%= button_to "Delete", @order, method: :delete, form: {data: {turbo_confirm: "Уверены?"}},class: "btn btn-danger" %></td>
+<td class="col-4"><%= button_to "Orders", orders_path, method: :get,class: "btn btn-info" %></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+<% if @order.order_id %>
+<div class="row m-1">
+<div class="col-2">
+<%= button_to "Partner Order", order_path(@order.order_id), method: :get, class: "btn btn-primary"%>
+</div>
+</div>
+<% end %>
+
+
+<% if (@partner_orders) and (@order.user.id.to_i == current_user.id.to_i) %>
+<div class="row m-1">
+<div class="col-2">
+<% unless @partner_orders.empty? %>
+<% @partner_orders.each do |partner_order| %>
+<div class="row">
+<div class="col">
+<%= partner_order.process%> 
+</div>
+<div class="col">
+<%=partner_order.count%>
+</div> 
+<div class="col">
+<%= partner_order.currency.label %>
+</div>
+<div class="col">
+<%= button_to "Show", partner_order, method: :get, class: "btn btn-info" %>
+</div>
+</div>
+<% end %>
+<% end%>
+</div>
+</div>
+<% end %>
+
+

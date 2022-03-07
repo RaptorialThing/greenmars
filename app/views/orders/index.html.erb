@@ -4,3 +4,38 @@
 <% else %>
 <%= button_to "My page", new_user_session_path, method: :get %>
 <% end %>
+
+<div class="container">
+<table class="table table-striped">
+<thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Currency</th>
+      <th scope="col">Count</th>
+      <th scope="col">Action</th>
+      <th scope="col">Trade</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+<tbody>
+<% @orders.each do |order| %>
+    <tr>
+      <th scope="row"><%= order.id%></th>
+      <td><%=order.currency.label %></td>
+      <td><%=order.count %></td>
+      <td><%=order.process %></td>
+      <td>
+      <% if order.process == "buy" %>
+      <%= button_to "sell", new_order_params_path(:origin_order_id=>order.id), method: :get, class: "btn btn-danger" %> 
+      <% else %>
+      <%= button_to "buy", new_order_params_path(:origin_order_id=>order.id), method: :get, class: "btn btn-success" %> 
+      <% end %>
+      </td>
+      <td>
+      <%= button_to "show", order, method: :get, class: "btn btn-info" %>
+      </td>
+    </tr>
+<% end %>
+</tbody>
+</table>
+</div>

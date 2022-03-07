@@ -1,7 +1,9 @@
 <%= form_with model: order,class: "form-group" do |f| %>
    <% if params[:action] == "new" %>
+
    <%= f.label :process %>
    <%= f.select :process, Order.processes.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
+   
 
    <%= f.label :currency_id %>
    <%= f.select :currency_id, Currency.all.collect{|c| [c.label, c.id] } %> </br>
@@ -12,10 +14,28 @@
    <%= f.label :status %>
    <%= f.select :status,  Order.statuses.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
 
-   <% else %>
+   <% elsif params[:action] == "edit" %>
 
    <%= f.label :status %>
    <%= f.select :status,  Order.statuses.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
+
+   <% elsif params[:action] == "new_params" %>
+
+   Do you want to  <%=order.process%> <%=order.count%> <%=order.currency.label%> ? </br>
+
+   <%= f.hidden_field :process, {order.process.to_s=> order.process.to_sym} %> 
+    <%= f.hidden_field :order_id, {"order_id"=>order.order_id} %> 
+   
+
+   <%= f.label :currency_id %>
+   <%= f.select :currency_id, Currency.all.collect{|c| [c.label, c.id] } %> </br>
+
+   <%= f.label :count %>
+   <%= f.number_field :count %> </br>
+
+   <%= f.label :status %>
+   <%= f.select :status,  Order.statuses.collect{|e| [e.first.to_s, e.first.to_sym]} %> </br>
+
 
    <% end %>
    

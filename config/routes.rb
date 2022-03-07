@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :orders
   resources :users
+  get 'orders_params/new/:origin_order_id', to: 'orders#new_params', as: :new_order_params
   root "orders#index"
 end
